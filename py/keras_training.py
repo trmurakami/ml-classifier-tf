@@ -54,13 +54,13 @@ with io.open('gen_helpers/tokenizer_dictionary.json', 'w', encoding='utf-8') as 
     f.write(json.dumps(tokenizer_json, ensure_ascii=False))
 
 
-max_sequence_length = 350
+max_sequence_length = 380
 
 sequences_padded = pad_sequences(sequences, maxlen=max_sequence_length)
 
 # vocab_size = len(tokenizer.word_index) + 1
 
-vocab_size = 15000
+vocab_size = 5000
 
 label_encoder = LabelEncoder()
 encoded_labels = label_encoder.fit_transform(labels)
@@ -80,14 +80,13 @@ X_train, X_test, y_train, y_test = train_test_split(
 model = keras.Sequential()
 model.add(keras.layers.Embedding(vocab_size, 64,
                                  input_length=max_sequence_length, mask_zero=True))
-model.add(keras.layers.LSTM(350, dropout=0.2, recurrent_dropout=0.2))
+model.add(keras.layers.LSTM(380, dropout=0.2, recurrent_dropout=0.2))
 model.add(keras.layers.Dense(num_classes, activation='softmax'))
 
 model.compile(loss='sparse_categorical_crossentropy',
               optimizer='adam', metrics=['accuracy'])
-model.fit(X_train, y_train, batch_size=350, epochs=15,
-          validation_data=(X_test, y_test), verbose=1, shuffle=True,
-          use_multiprocessing=True, workers=8)
+model.fit(X_train, y_train, batch_size=380, epochs=15,
+          validation_data=(X_test, y_test), verbose=1, shuffle=True)
 
 loss, accuracy = model.evaluate(X_test, y_test)
 print(f"Loss: {loss:.4f}, Accuracy: {accuracy:.4f}")
