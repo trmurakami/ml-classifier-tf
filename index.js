@@ -94,13 +94,13 @@ function tokenize(text) {
     // create a list of slices of the list of tokens
     let i = 0;
     tokenized_text_segments = [];
-    while (i+100 < Math.max(tokens.length, 380)) {
+    while (i+350 < Math.max(tokens.length, 380)) {
         var new_slice = tokens.slice(i,i+380);
         while (new_slice.length < 380) {
             new_slice.push(0);
           }
         tokenized_text_segments.push(new_slice);
-        i = i + 100;
+        i = i + 350;
     }
     return tokenized_text_segments;
   }
