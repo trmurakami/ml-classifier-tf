@@ -158,7 +158,7 @@ const table = document.getElementById('predictions-table');
 for (let i = 0; i < prob.length; i++) {
   const exampleProbabilities = prob[i];
   const mostProbableClass = getMostProbableClass(exampleProbabilities);
-  const top5Classes = getTopKClasses(exampleProbabilities, 5);
+  const top5Classes = getTopKClasses(exampleProbabilities, 10);
 
   const row = table.insertRow();
   const exampleCell = row.insertCell(0);
@@ -169,7 +169,7 @@ for (let i = 0; i < prob.length; i++) {
   exampleCell.innerHTML = `${i + 1}`;
   mostProbableCell.innerHTML = classNames[mostProbableClass][0];
   probabilityCell.innerHTML = '<div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="'+exampleProbabilities[mostProbableClass].toFixed(2)*100+'" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar bg-success" style="width: '+exampleProbabilities[mostProbableClass].toFixed(2)*100+'%">'+exampleProbabilities[mostProbableClass].toFixed(2)*100+'%</div></div>'+exampleProbabilities[mostProbableClass].toFixed(4)+'';
-  top3Cell.innerHTML = top5Classes.map((classIndex) => `${classNames[classIndex][0]} (${exampleProbabilities[classIndex].toFixed(4)})`).join(', ');
+  top3Cell.innerHTML = top5Classes.map((classIndex) => `${classNames[classIndex][0]} (${exampleProbabilities[classIndex].toFixed(4)})`).join('<br/> ');
 }
 
 
