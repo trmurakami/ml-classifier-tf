@@ -2,10 +2,10 @@ let speechText;
 let predictOutput;
 let theButton;
 let vocab;
-let vocabPath = 'py/keras/tokenizer_dictionary.json';
+let vocabPath = 'py/tokenizer_dictionary.json';
 let tokenizer;
 let model;
-let modelPath = 'py/keras/Model_js/model.json';
+let modelPath = 'py/Model_js/model.json';
 
 
 // Defina o classNames em um escopo mais amplo, fora da função initialize
@@ -14,7 +14,7 @@ let classNames;
 function loadJSON(callback) {
     var xhr = new XMLHttpRequest();
     xhr.overrideMimeType("application/json");
-    xhr.open('GET', 'py/keras/label_encoder.json', true);
+    xhr.open('GET', 'py/label_encoder.json', true);
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == "200") {
             callback(JSON.parse(xhr.responseText));
@@ -100,9 +100,6 @@ async function predictParty() {
         //x = x.arraySync();
         return x
     })
-    // const classNames = ['SDG01', 'SDG02', 'SDG03', 'SDG04', 'SDG05', 'SDG06', 'SDG07', 'SDG08', 'SDG09', 'SDG10', 'SDG11', 'SDG12', 'SDG13', 'SDG14', 'SDG15', 'SDG16'];
-
-    //const classNames = require('py/keras/label_encoder.json');
 
     function getMostProbableClass(probabilities) {
         const maxProbability = Math.max(...probabilities);
