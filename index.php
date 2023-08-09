@@ -18,7 +18,7 @@
             <div class="ml-container">
                 <label for="search" class="form-label">Digite título e resumo</label>
                 <textarea class="form-control" id="userInput" rows="6"
-                    placeholder="Digite um título e resumo em inglês"></textarea>
+                    placeholder="Digite um título e resumo em português"></textarea>
                 <div id="submit-button">
                     <button type="submit" class="btn btn-primary mt-4" id="predict-btn" disabled=True>Predict!</button>
                     <a href="<?php $_SERVER['PHP_SELF']; ?>" class="btn btn-warning mt-4">Recargar</a>
