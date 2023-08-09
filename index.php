@@ -11,6 +11,9 @@
 </head>
 
 <body>
+    <?php
+        include('inc/ga.php'); 
+    ?>
     <div class="jumbotron">
         <div class="container bg-light p-5 rounded mt-5">
             <h1 class="display-5">Classificador - Ciência da Informação</h1>
