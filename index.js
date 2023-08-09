@@ -2,7 +2,7 @@ let speechText;
 let predictOutput;
 let theButton;
 let vocab;
-let vocabPath = 'py/tokenizer_dictionary.json';
+let vocabPath = 'py/gen_helpers/tokenizer_dictionary.json';
 let tokenizer;
 let model;
 let modelPath = 'py/Model_js/model.json';
@@ -10,11 +10,12 @@ let modelPath = 'py/Model_js/model.json';
 
 // Defina o classNames em um escopo mais amplo, fora da função initialize
 let classNames;
+let termosCompostos;
 
 function loadJSON(callback) {
     var xhr = new XMLHttpRequest();
     xhr.overrideMimeType("application/json");
-    xhr.open('GET', 'py/label_encoder.json', true);
+    xhr.open('GET', 'py/gen_helpers/label_encoder.json', true);
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == "200") {
             callback(JSON.parse(xhr.responseText));
@@ -23,17 +24,36 @@ function loadJSON(callback) {
     xhr.send(null);
 }
 
+function loadTermosCompostos(callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'py/data/termos.txt', true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var content = xhr.responseText;
+            var wordArray = content.split('\n').map(function (line) {
+                return line.trim();
+            });
+            wordArray.sort(function (a, b) {
+                return b.length - a.length;
+            });
+            callback(wordArray);
+        }
+    };
+    xhr.send();
+}
+
 function initialize() {
     loadJSON(function (data) {
         classNames = Object.entries(data);
-        console.log(classNames);
+        //console.log(classNames);
+    });
+    loadTermosCompostos(function (data) {
+        termosCompostos = data;
+        return termosCompostos;
     });
 }
 
 window.onload = initialize;
-
-
-
 
 // For some reason the L2 regularization in tf does not 
 // connect to the L2 regularizer in tfjs
@@ -57,12 +77,13 @@ async function loadTokenizer() {
 async function loadModel() {
     const model = tf.loadLayersModel(modelPath);
     return model;
-  }
-
+}
 
 // tokenize function to convert input text to list of tokenized segments
 function tokenize(text) {
-    text = text.toLowerCase();
+
+
+
     var split_text = text.split(' ');
     var tokens = [];
     split_text.forEach(element => {
@@ -87,14 +108,26 @@ function tokenize(text) {
 async function predictParty() {
     const prob = tf.tidy(() => {
         text = document.getElementById('userInput').value;
-        text = JSON.stringify(text);
 
+        textLower = text.toLowerCase();
+        text = textLower;
+        loadTermosCompostos(function (data) {
+            termosCompostos = data;
+            return termosCompostos;
+        });
+        termosCompostos.forEach(function (word) {
+            var regex = new RegExp(word, 'g');
+            text = text.replace(regex, word.replace(/\s+/g, ''));
+        });
+
+
+        text = JSON.stringify(text);
         var stopwords = ["a", "about", "above", "after", "again", "against", "all", "am", "an", "and", "any","are","aren't","as","at","be","because","been","before","being","below","between","both","but","by","can't","cannot","could","couldn't","did","didn't","do","does","doesn't","doing","don't","down","during","each","few","for","from","further","had","hadn't","has","hasn't","have","haven't","having","he","he'd","he'll","he's","her","here","here's","hers","herself","him","himself","his","how","how's","i","i'd","i'll","i'm","i've","if","in","into","is","isn't","it","it's","its","itself","let's","me","more","most","mustn't","my","myself","no","nor","not","of","off","on","once","only","or","other","ought","our","ours","ourselves","out","over","own","same","shan't","she","she'd","she'll","she's","should","shouldn't","so","some","such","than","that","that's","the","their","theirs","them","themselves","then","there","there's","these","they","they'd","they'll","they're","they've","this","those","through","to","too","under","until","up","very","was","wasn't","we","we'd","we'll","we're","we've","were","weren't","what","what's","when","when's","where","where's","which","while","who","who's","whom","why","why's","with","won't","would","wouldn't","you","you'd","you'll","you're","you've","your","yours","yourself","yourselves"];
         text = text.replace(stopwords, "")
         var x = tokenize(text)
         x = model.predict(tf.tensor2d(x, [x.length, 350]));
 
-        x.mean(0).print();
+        // x.mean(0).print();
         x = x.arraySync();
         // x = tf.mean(x);
         //x = x.arraySync();
