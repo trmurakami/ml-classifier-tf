@@ -94,13 +94,13 @@ function tokenize(text) {
     // create a list of slices of the list of tokens
     let i = 0;
     tokenized_text_segments = [];
-    while (i+350 < Math.max(tokens.length, 380)) {
+    while (i+379 < Math.max(tokens.length, 380)) {
         var new_slice = tokens.slice(i,i+380);
         while (new_slice.length < 380) {
             new_slice.push(0);
           }
         tokenized_text_segments.push(new_slice);
-        i = i + 350;
+        i = i + 379;
     }
     return tokenized_text_segments;
   }
@@ -158,7 +158,7 @@ const table = document.getElementById('predictions-table');
 for (let i = 0; i < prob.length; i++) {
   const exampleProbabilities = prob[i];
   const mostProbableClass = getMostProbableClass(exampleProbabilities);
-  const top3Classes = getTopKClasses(exampleProbabilities, 3);
+  const top5Classes = getTopKClasses(exampleProbabilities, 5);
 
   const row = table.insertRow();
   const exampleCell = row.insertCell(0);
@@ -169,7 +169,7 @@ for (let i = 0; i < prob.length; i++) {
   exampleCell.innerHTML = `${i + 1}`;
   mostProbableCell.innerHTML = classNames[mostProbableClass][0];
   probabilityCell.innerHTML = '<div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="'+exampleProbabilities[mostProbableClass].toFixed(2)*100+'" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar bg-success" style="width: '+exampleProbabilities[mostProbableClass].toFixed(2)*100+'%">'+exampleProbabilities[mostProbableClass].toFixed(2)*100+'%</div></div>'+exampleProbabilities[mostProbableClass].toFixed(4)+'';
-  top3Cell.innerHTML = top3Classes.map((classIndex) => `${classNames[classIndex][0]} (${exampleProbabilities[classIndex].toFixed(4)})`).join(', ');
+  top3Cell.innerHTML = top5Classes.map((classIndex) => `${classNames[classIndex][0]} (${exampleProbabilities[classIndex].toFixed(4)})`).join(', ');
 }
 
 

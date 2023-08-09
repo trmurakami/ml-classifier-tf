@@ -32,10 +32,10 @@
 
             <table id="predictions-table" class="table mt-5">
                 <tr>
-                    <th>Exemplo</th>
+                    <th>Interação</th>
                     <th>Classe Mais Provável</th>
                     <th>Probabilidade</th>
-                    <th>Top 3 Classes</th>
+                    <th>Top 5 Classes</th>
                 </tr>
             </table>
 
