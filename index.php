@@ -47,6 +47,10 @@
                 </tr>
             </table>
 
+            <p>Modelo testado no <a href="https://www.tensorflow.org/?hl=pt-br" target="_blank">Tensorflow</a> e
+                utilizando o <a href="https://www.tensorflow.org/js?hl=pt-br" target="_blank">Tensorflow.js</a> para
+                consulta no Browser</p>
+
         </div>
     </div>
 
