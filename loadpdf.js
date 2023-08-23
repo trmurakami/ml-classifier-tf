@@ -38,7 +38,7 @@ document.getElementById('pdfForm').addEventListener('submit', function(event) {
 
                 extractText(1).then(function(extractedText) {
                     const textElement = document.getElementById('userInput');
-                    textElement.textContent = extractedText;
+                    textElement.textContent = extractedText.replace(/\s+/g, ' ');
                 }).catch(function(error) {
                     console.error('Erro ao extrair texto:', error);
                 });
