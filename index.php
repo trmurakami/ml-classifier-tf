@@ -43,7 +43,7 @@
                     <th>Interação</th>
                     <th>Classe Mais Provável</th>
                     <th>Probabilidade</th>
-                    <th>Top 5 Classes</th>
+                    <th>Top 10 Classes prováveis</th>
                 </tr>
             </table>
 
