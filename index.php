@@ -27,9 +27,15 @@
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Ou insira um PDF</label>
                         <input class="form-control" type="file" id="pdfInput" accept=".pdf">
-                        <button type="submit" class="btn btn-warning mt-4">Extrair Texto (Primeiro passo)</button>
+                        <button type="submit" class="btn btn-warning mt-4">Extrair Texto (Primeiro passo, caso tenha
+                            optado por PDF)</button>
                     </div>
                 </form>
+
+                <div id="transform-button">
+                    <button type="submit" class="btn btn-warning mt-4" id="transform-btn">Transformar
+                        texto (Segundo passo)</button>
+                </div>
 
                 <div id="submit-button">
                     <button type="submit" class="btn btn-primary mt-4" id="predict-btn" disabled=True>Predict!</button>
@@ -57,6 +63,7 @@
 
     <script src="./index.js"></script>
     <script src="./loadpdf.js"></script>
+    <script src="./transform.js"></script>
 </body>
 
 </html>
