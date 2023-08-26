@@ -79,7 +79,7 @@ compound_terms.sort(key=len, reverse=True)
 
 
 data = pd.read_csv(
-    'data/Assuntos.tsv', delimiter='\t')
+    'data/ProdmaisPPGCI.tsv', delimiter='\t')
 # lowercase
 data['Data'] = data['Data'].apply(lambda x: x.lower())
 # converter termos compostos
@@ -110,7 +110,7 @@ sequences_padded = pad_sequences(sequences, maxlen=max_sequence_length)
 
 # vocab_size = len(tokenizer.word_index) + 1
 
-vocab_size = 2000
+vocab_size = 10000
 
 label_encoder = LabelEncoder()
 encoded_labels = label_encoder.fit_transform(labels)
